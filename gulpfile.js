@@ -56,7 +56,6 @@ gulp.task('js', () => {
         .pipe(webpack(require('./webpack.config.js')))
         .pipe(gulp.dest('./tmp/assets/js'));
 });
-
 /* Browsersync Server */
 gulp.task('browsersync', (done) => {
     browserSync.init({
