@@ -23,7 +23,7 @@ gulp.task('default', (done) => {
 });
 
 gulp.task('serve', (done) => {
-    gulp.series('clean', gulp.parallel('pug', 'sass', 'js'), 'browsersync', 'watch')(done)
+    gulp.series('clean', gulp.parallel('pug', 'sass', 'js'))(done)
 });
 
 /* Pug task */
@@ -57,20 +57,20 @@ gulp.task('js', () => {
         .pipe(gulp.dest('./tmp/assets/js'));
 });
 /* Browsersync Server */
-gulp.task('browsersync', (done) => {
-    browserSync.init({
-        server: ["./tmp", "./src/static"],
-        notify: false,
-        ui: false,
-        online: false,
-        ghostMode: {
-            clicks: false,
-            forms: false,
-            scroll: false
-        }
-    });
-    done();
-});
+// gulp.task('browsersync', (done) => {
+//     browserSync.init({
+//         server: ["./tmp", "./src/static"],
+//         notify: false,
+//         ui: false,
+//         online: false,
+//         ghostMode: {
+//             clicks: false,
+//             forms: false,
+//             scroll: false
+//         }
+//     });
+//     done();
+// });
 
 /* Watcher */
 gulp.task('watch', () => {
