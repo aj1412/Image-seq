@@ -23,7 +23,7 @@ gulp.task('default', (done) => {
 });
 
 gulp.task('serve', (done) => {
-    gulp.series('clean', gulp.parallel('pug', 'sass', 'js'))(done)
+    gulp.series('clean', gulp.parallel('pug', 'sass', 'js' , 'static'))(done)
 });
 
 /* Pug task */
@@ -56,6 +56,13 @@ gulp.task('js', () => {
         .pipe(webpack(require('./webpack.config.js')))
         .pipe(gulp.dest('./tmp/assets/js'));
 });
+
+/* Static content task */
+gulp.task('static', () => {
+    return gulp.src('./src/static/**/*')
+        .pipe(gulp.dest('./tmp/static'));
+});
+
 /* Browsersync Server */
 // gulp.task('browsersync', (done) => {
 //     browserSync.init({
