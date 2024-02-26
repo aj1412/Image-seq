@@ -45,7 +45,7 @@ const scrollbar = SmoothScrollbar.init(view, {
 (function () {
 
     // generate array of images paths. length = frames length, see: /src/assets/img
-    const urls = new Array(360).fill(null).map((value, index) => `static/pngseq2880/${(index + 1000).toString().padStart(5, '0')}.png`);
+    const urls = new Array(360).fill(null).map((value, index) => `static/highresPngSeq/${(index + 1000).toString().padStart(6, '0')}.png`);
 
     // load images async
     const images = preloadImages(urls);
