@@ -28,14 +28,15 @@ export const preloadImages = (urls) => {
  * Draw and scale image in canvas
  */
 export const calcDrawImage = (ctx, image, left = 0.5, top = 0.5) => {
-    const cWidth = ctx.canvas.width;
-    const cHeight = ctx.canvas.height;
+    var dpr = window.devicePixelRatio || 1;
+    const cWidth = ctx.canvas.width * dpr ;
+    const cHeight = ctx.canvas.height * dpr;
     const width = image.width;
     const height = image.height;
     const ratio = width / height;
     const cRatio = cWidth / cHeight;
     let resultHeight, resultWidth;
-
+    ctx.scale(dpr, dpr);
     if (ratio > cRatio) {
         resultHeight = cHeight;
         resultWidth = cHeight * ratio;
