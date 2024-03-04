@@ -24,18 +24,28 @@ export const preloadImages = (urls) => {
     return Promise.all(urls.map((src) => preloadImage(src)));
 };
 
+
 /**
  * Draw and scale image in canvas
  */
 export const calcDrawImage = (ctx, image, left = 0.5, top = 0.5) => {
     const devicePixelRatio = window.devicePixelRatio || 1; // Get device pixel ratio
+
+    // Check if it's a Mac Retina display
+    const isMacRetina = window.matchMedia(
+        '(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)'
+    ).matches;
+
     const backingStoreRatio = ctx.webkitBackingStorePixelRatio ||
         ctx.mozBackingStorePixelRatio ||
         ctx.msBackingStorePixelRatio ||
         ctx.oBackingStorePixelRatio ||
         ctx.backingStorePixelRatio || 1;
 
-    const ratio = devicePixelRatio / backingStoreRatio; // Determine the ratio to apply
+    let ratio = devicePixelRatio;
+    if (isMacRetina) {
+        ratio *= 0.5; // Adjust the ratio for Mac Retina displays
+    }
 
     // Set the canvas size considering the ratio
     const canvasWidth = ctx.canvas.width;
@@ -64,4 +74,5 @@ export const calcDrawImage = (ctx, image, left = 0.5, top = 0.5) => {
 
     ctx.drawImage(image, (cWidth - resultWidth) * left, (cHeight - resultHeight) * top, resultWidth, resultHeight);
 };
+
 
