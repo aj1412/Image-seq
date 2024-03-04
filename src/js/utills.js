@@ -28,21 +28,40 @@ export const preloadImages = (urls) => {
  * Draw and scale image in canvas
  */
 export const calcDrawImage = (ctx, image, left = 0.5, top = 0.5) => {
+    const devicePixelRatio = window.devicePixelRatio || 1; // Get device pixel ratio
+    const backingStoreRatio = ctx.webkitBackingStorePixelRatio ||
+        ctx.mozBackingStorePixelRatio ||
+        ctx.msBackingStorePixelRatio ||
+        ctx.oBackingStorePixelRatio ||
+        ctx.backingStorePixelRatio || 1;
+
+    const ratio = devicePixelRatio / backingStoreRatio; // Determine the ratio to apply
+
+    // Set the canvas size considering the ratio
+    const canvasWidth = ctx.canvas.width;
+    const canvasHeight = ctx.canvas.height;
+    ctx.canvas.width = canvasWidth * ratio;
+    ctx.canvas.height = canvasHeight * ratio;
+
+    // Scale the drawing context
+    ctx.scale(ratio, ratio);
+
     const cWidth = ctx.canvas.width;
     const cHeight = ctx.canvas.height;
     const width = image.width;
     const height = image.height;
-    const ratio = width / height;
+    const imageRatio = width / height;
     const cRatio = cWidth / cHeight;
     let resultHeight, resultWidth;
 
-    if (ratio > cRatio) {
+    if (imageRatio > cRatio) {
         resultHeight = cHeight;
-        resultWidth = cHeight * ratio;
+        resultWidth = cHeight * imageRatio;
     } else {
         resultWidth = cWidth;
-        resultHeight = cWidth / ratio;
+        resultHeight = cWidth / imageRatio;
     }
 
-    ctx.drawImage(image, (cWidth - resultWidth) * left, (cHeight - resultHeight) * top, resultWidth, resultHeight)
+    ctx.drawImage(image, (cWidth - resultWidth) * left, (cHeight - resultHeight) * top, resultWidth, resultHeight);
 };
+
